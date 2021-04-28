@@ -45,7 +45,7 @@ def load_field_config(filename):
         os.path.dirname(__file__),
         'config', filename)
 
-    with open(path, 'r') as f:
+    with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 
@@ -78,7 +78,7 @@ class ServiceManager(QObject):
 
     def refresh_services(self):
         # load the default services
-        with open(_CONFIG_SERVICES_PATH, 'r') as f:
+        with open(_CONFIG_SERVICES_PATH, 'r', encoding='utf-8') as f:
             default_services = json.load(f)
 
         self.services = {}
@@ -126,7 +126,7 @@ class ServiceManager(QObject):
         self.refreshed.emit()
 
     def create_from_file(self, path):
-        with open(path, 'r') as f:
+        with open(path, 'r', encoding='utf-8') as f:
             try:
                 service = json.load(f)
             except json.JSONDecodeError:
@@ -161,7 +161,7 @@ class ServiceManager(QObject):
     def _load_predefined_areas(self):
         path = self.user_service_path() / 'predefined_areas.json'
         try:
-            with open(path, 'rt') as f:
+            with open(path, 'rt', encoding='utf-8') as f:
                 try:
                     areas = json.load(f)
                 except json.JSONDecodeError:
@@ -180,7 +180,7 @@ class ServiceManager(QObject):
     def _save_predefined_areas(self):
         areas_to_save = {k: v for k, v in self._predefined_bounding_boxes.items() if not v.get('read_only')}
         path = self.user_service_path() / 'predefined_areas.json'
-        with open(path, 'wt') as f:
+        with open(path, 'wt', encoding='utf-8') as f:
             f.write(json.dumps(areas_to_save, indent=4))
 
     def add_predefined_bounding_box(self, name, configuration):
@@ -220,7 +220,7 @@ class ServiceManager(QObject):
         config['servicetype'] = service_type
         config['serviceid'] = service_id
 
-        with open(path, 'wt') as f:
+        with open(path, 'wt', encoding='utf-8') as f:
             f.write(json.dumps(config, indent=4))
         return True
 
@@ -257,7 +257,7 @@ class ServiceManager(QObject):
         if path.exists():
             path.unlink()
 
-        with open(path, 'wt') as f:
+        with open(path, 'wt', encoding='utf-8') as f:
             f.write(json.dumps(configuration, indent=4))
         self.refresh_services()
 

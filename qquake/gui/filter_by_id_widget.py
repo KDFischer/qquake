@@ -215,7 +215,7 @@ class FilterByIdWidget(QWidget, FORM_CLASS):
         if not file:
             return
 
-        with open(file, 'rt') as f:
+        with open(file, 'rt', encoding='utf-8') as f:
             text = '\n'.join(f.readlines())
             self.event_ids_edit.setPlainText('\n'.join(self.parse_multi_input(text)))
 
