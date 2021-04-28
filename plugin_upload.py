@@ -38,7 +38,7 @@ def main(parameters, arguments):
     server = xmlrpc.client.ServerProxy(address, verbose=VERBOSE)
 
     try:
-        with open(arguments[0], 'rb') as handle:
+        with open(arguments[0], 'rb', encoding='utf-8') as handle:
             plugin_id, version_id = server.plugin.upload(
                 xmlrpc.client.Binary(handle.read()))
         print("Plugin ID: %s" % plugin_id)
